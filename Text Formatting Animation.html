@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Animation</title>
+    <style>
+        body{
+            margin: 0px;
+            padding: 0px;
+            background-color: azure;
+        }
+        .heading{
+            padding: 1px;
+            text-align: center;
+            background-color: rgb(253, 222, 163);
+            position: sticky;
+            top: 0px;
+        }
+        #frame{
+            padding: 10px;
+        }
+        #frame .text-frame {
+            margin: 10px auto;
+            margin-left: 100px;
+            margin-right: 100px;
+            height: 200px;
+            background-color: aliceblue;
+            display: flex;
+            flex-flow: column nowrap;
+            justify-content: center;
+            align-items: center;
+            border: 4px dashed grey;
+            border-radius: 10px;
+        }
+        #text{
+            font-size: 80px;
+        }
+        
+        #frame #desc::before{
+            content: "Description: ";
+            font-size: larger;
+            font-weight: bold;
+            margin-left: 100px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="heading">
+        <h1>Text Effects in HTML</h1>
+    </div>
+    <div id="frame">
+        <div class="text-frame"><p id="text"><span id="tag">Some Text Here</span> </p></div>
+        <div id="desc">Description here...</div>
+    </div>
+    <!-- <div class="shade-effect"> box effect</div> -->
+    
+    <!-- adding javascript for dynamics and animation  -->
+    <script>
+        window.onload = function(){
+            var text = prompt("Type some text as a sample : ");
+           
+            var sampleText = document.getElementById("text");
+            // if user type some text the new p tag is replaced by old one
+            if( text == null || text == ""){
+                text = "Some Text Here";
+                alert("Sample text is taken for now.");
+            }
+
+            // creating function to animate
+            var tags = ["u","b","i","big","small","em","strong","sub","sup","del","ins","mark"];
+            var descriptions = ["is used for underlining the text.","is used for making the text bold.","makes the text appear like italic.", "makes text big or simply increases the font size", "is opposite of big take and makes text small sized.", "is similar to italic, makes text stalanted.", "tag makes text as bold and is used to show the text as important.", "is used to create a subscript text. As you have seen in chemical formulae.","stands for super script as you would have seen in maths that shows expontiation.", "shows deleted text.", "shows inserted text. This is similar to underline.", "is used to highlight the text."];
+
+
+            var index = 0;
+            function changeEffect(){
+                
+                if(index == tags.length){
+                    alert("You can add more tags in the tags array.");
+                    clearInterval(effect);
+                }
+                var oldTag = document.getElementById("tag"); // span
+                // creating element
+                var newTag = document.createElement(tags[index]);
+                var txtNode = document.createTextNode(text);
+                newTag.appendChild(txtNode);
+                newTag.id = "tag";
+                // replacing element
+                sampleText.replaceChild(newTag, oldTag);
+
+                // changing description
+                var desc = document.getElementById("desc");
+                desc.innerHTML = "&lt;"+tags[index]+"&gt; "+ descriptions[index];
+
+                index += 1;
+            }
+            var effect = setInterval(changeEffect, 4000);
+        };
+    </script>
+</body>
+</html>
